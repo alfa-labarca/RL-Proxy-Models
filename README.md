@@ -50,7 +50,7 @@ For each algorithm in **RL approaches** and **Proxy Approaches**, the flag `--mo
 
 # Examples
 
-```CMD
+```bash
 python SQN.py --data=<path_to_data_directory> --model=NItNet  #One run of NIN-SQN
 python FUT.py --data=<path_to_data_directory> --runs=1        #One run of the FUT model for each base model
 python FUT.py --data=<path_to_data_directory>                 #One run of the FUT model for each base model
