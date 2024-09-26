@@ -62,10 +62,10 @@ if __name__ == '__main__':
                 size.append(3)
             s=list(history)
             len_state.append(length if len(s)>=length else 1 if len(s)==0 else len(s))
-            s=pad_history(s,length,pad_item)
             a=row['item_id']
             hist.append(len(s))
             fut.append(len(group) - len(s) - 1)
+            s=pad_history(s,length,pad_item)
             is_b=row['is_buy']
             state.append(s)
             action.append(a)
@@ -141,17 +141,17 @@ if __name__ == '__main__':
             category.append(5)
             n_cat.append(5)
         else:
-            print("Error", group, id)
+            print("Que chucha", group, id)
     n_cat = n_cat[1:]
     n_cat.append(6)
-    print("listo, largos: ", len(state), len(action), len(next_inter), len(category), len(n_cat))
+    print("lengths (should all be the same): ", len(state), len(action), len(next_inter), len(category), len(n_cat))
 
     dic={'state':state,'len_state':len_state,'action':action,'is_buy':is_buy,'next_state':next_state,'len_next_states':len_next_state,
         'is_done':is_done,'fut_reward':fut_reward, 'next_action': next_action, 'next_inter': next_inter, 'category': category,
         'category2': category2, 'inter2': inter2, 'n_cat':n_cat, 'size':size, 'hist':hist, 'fut':fut}
     reply_buffer=pd.DataFrame(data=dic)
-    reply_buffer.to_pickle(os.path.join(data_directory, 'replay_buffer.df'))
+    reply_buffer.to_pickle(os.path.join(data_directory, 'replay_buffer_mio.df'))
 
     dic={'state_size':[length],'item_num':[pad_item]}
     data_statis=pd.DataFrame(data=dic)
-    data_statis.to_pickle(os.path.join(data_directory, 'data_statis.df'))
+    data_statis.to_pickle(os.path.join(data_directory, 'data_statis_mio.df'))
