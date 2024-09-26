@@ -37,10 +37,11 @@ if __name__ == '__main__':
     item_ids=sorted_events.item_id.unique()
     pad_item=len(item_ids)
 
-    train_sessions = pd.read_pickle(os.path.join(data_directory, 'sampled_train.df'))
+    train_sessions = pd.read_pickle(os.path.join(data_directory, 'sampled_train_mio.df'))
     groups=train_sessions.groupby('session_id')
     ids=train_sessions.session_id.unique()
 
+    # for gamma in [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]:
     state,len_state,action,is_buy,next_state,len_next_state,is_done,fut_reward,next_action,next_inter,category,category2,n_cat,inter2,size,hist,fut = [],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]
     for id in ids:
         group=groups.get_group(id)
@@ -60,11 +61,11 @@ if __name__ == '__main__':
                 size.append(3)
             s=list(history)
             len_state.append(length if len(s)>=length else 1 if len(s)==0 else len(s))
-            s=pad_history(s,length,pad_item)
             hist.append(len(s))
             a=row['item_id']
             fut.append(len(group) - len(s) - 1)
             is_b=row['is_buy']
+            s=pad_history(s,length,pad_item)
             state.append(s)
             action.append(a)
             if enter2:
@@ -142,14 +143,14 @@ if __name__ == '__main__':
             print("Error", group, id)
     n_cat = n_cat[1:]
     n_cat.append(6)
-    print("listo, largos: ", len(state), len(action), len(next_inter), len(category), len(n_cat))
+    print("Lengths (should all be the same): ", len(state), len(action), len(next_inter), len(category), len(n_cat))
 
     dic={'state':state,'len_state':len_state,'action':action,'is_buy':is_buy,'next_state':next_state,'len_next_states':len_next_state,
         'is_done':is_done,'fut_reward':fut_reward, 'next_action': next_action, 'next_inter': next_inter, 'category': category,
         'category2': category2, 'inter2': inter2, 'n_cat':n_cat, 'size':size, 'hist':hist, 'fut':fut}
     reply_buffer=pd.DataFrame(data=dic)
-    reply_buffer.to_pickle(os.path.join(data_directory, 'replay_buffer.df'))
+    reply_buffer.to_pickle(os.path.join(data_directory, 'replay_buffer_mio.df'))
 
     dic={'state_size':[length],'item_num':[pad_item]}
     data_statis=pd.DataFrame(data=dic)
-    to_pickled_df(data_directory,data_statis=data_statis)
+    to_pickled_df(data_directory,data_statis_mio=data_statis)
