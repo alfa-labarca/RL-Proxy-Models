@@ -41,18 +41,18 @@ The code has the following requirements:
 
 # How to Run the Code
 
-The repository is divided between the two datasets that were used in the paper, RC15 and RetailRocket. Within each of these folders, the algorithms are subdivided into three different sections:
-* **baselines**: Contain the self-supervised sequential algorithms used as a baseline for the results. Running `python Caser.py --data=<path_to_data_directory>` will output the result of one run with the Caser baseline.
-* **RL approaches:** This folder contains the **SQN** and **SAC** algorithms as proposed by **Xin et al. (2020)**, as well as the **EVAL** model, which modifies the loss function of the SQN model. **RL_preds.py** is a modified version of the SQN model which removes the self-supervised, cross-entropy based head and computes the loss and predictions directly from the RL head. Its performance can be found in Appendix E. of the ([paper](https://openreview.net/pdf?id=ie3vXkMvRY)).
-* **Proxy Approaches:** This folder contains the files to run the **CAT**, **CAT3**, **FUT** and **HIST** models, which replace the RL head of SQN with a proxy-learning objective function.
-
-For each algorithm in **RL approaches** and **Proxy Approaches**, the flag `--model=` can be used to select which base algorithm (GRU, Caser, NItNet or SASRec) will be used for one run of the model. Alternatively, the flag `--runs={X}` can be used to run X runs of every base model sequentially. Meaning, `python CAT.py --runs=2` will sequentially run: `GRU-CAT, Caser-CAT, NIN-CAT, SAS-CAT, GRU-CAT, Caser-CAT, NIN-CAT, SAS-CAT`. By default, the code will do one run of each model.
-
-# Examples
+To use our code, first unzip the datasets. Then, you can use the commands from [scripts.sh](https://github.com/alfa-labarca/RL-Proxy-Models/blob/main/scripts.sh) to replicate the results from our paper. For example, the following commands run a GRU model with (and without) the different auxiliary losses studied in the paper: 
 
 ```bash
-python SQN.py --data=<path_to_data_directory> --model=NItNet  #One run of NIN-SQN
-python FUT.py --data=<path_to_data_directory> --runs=1        #One run of the FUT model for each base model
-python FUT.py --data=<path_to_data_directory>                 #One run of the FUT model for each base model
-python SASRec.py --data=<path_to_data_directory>              #One run of SASRec
+python3 Baselines/GRU.py --data=Datasets/RetailRocket --lr=0.005
+python3 Proxy\ Approaches/HIST.py --data=Datasets/RetailRocket --model=GRU --lr=0.005
+python3 Proxy\ Approaches/CAT.py --data=Datasets/RetailRocket --model=GRU --lr=0.005
+python3 Proxy\ Approaches/FUT.py --data=Datasets/RetailRocket --model=GRU --lr=0.005
+python3 RL\ approaches/EVAL.py --data=Datasets/RetailRocket --model=GRU --lr=0.005
+python3 RL\ approaches/SQN.py --data=Datasets/RetailRocket --model=GRU --lr=0.005
 ```
+
+The code is divided into three folders:
+* **baselines**: This folder contains the self-supervised sequential algorithms (**GRU**, **Caser**, **NextItNet**, and **SASRec**).
+* **RL approaches:** This folder contains the **SQN** and **SAC** algorithms as proposed by **Xin et al. (2020)**, as well as the **EVAL** model, which modifies the loss function of the SQN model. **RL_preds.py** is a modified version of the SQN model -- which removes the self-supervised head and computes the loss and predictions directly from the RL head. Its performance can be found in Appendix E. of the ([paper](https://openreview.net/pdf?id=ie3vXkMvRY)).
+* **Proxy Approaches:** This folder contains the files to run the **CAT**, **CAT3**, **FUT**, and **HIST** models -- which replace the RL head of SQN with a proxy-learning objective function.
