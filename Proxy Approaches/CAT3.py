@@ -311,7 +311,6 @@ if __name__ == '__main__':
     item_num = data_statis['item_num'][0]  # total number of items
     reward_click = args.r_click
     reward_buy = args.r_buy
-    reward_negative=args.r_negative
     topk=[5,10,15,20]
     # save_file = 'pretrain-GRU/%d' % (hidden_size)
     if args.model:
