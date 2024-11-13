@@ -2,7 +2,7 @@
 
 Following the publication of this article, we extended our research by testing variations of our proxy models. During this process, we identified a bug in the proxy models that caused the proxy loss to target the incorrect feature column in both the *-HIST (GRU-HIST, Caser-HIST, NIN-HIST, SAS-HIST) and *-FUT models.
  
-As a result, we revisited the experiments and reran all tests from scratch, using both datasets (RetailRocket and YouChoose) and all methods. The revised results, alongside the original published metrics, are presented in the tables below:
+To address this, we reran the affected models on both datasets (RetailRocket and RC15) and included new results for the *-FUT models on the RC15 dataset, as these were absent in the original publication. The revised results, alongside the original published metrics, are presented in the tables below:
 
 ## Revised results on RetailRocket dataset
 ![image](https://github.com/user-attachments/assets/adc7a8bd-46b1-461a-9184-feaccbc771e8)
