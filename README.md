@@ -1,6 +1,32 @@
+# Revision Notice: October 2024
+
+Following the publication of this article, we extended our research by testing variations of our proxy models. During this process, we identified a bug in the proxy models that caused the proxy loss to target the incorrect feature column in both the *-HIST (GRU-HIST, Caser-HIST, NIN-HIST, SAS-HIST) and *-FUT models.
+ 
+As a result, we revisited the experiments and reran all tests from scratch, using both datasets (RetailRocket and YouChoose) and all methods. The revised results, alongside the original published metrics, are presented in the tables below:
+
+## Revised results on RetailRocket dataset
+![image](https://github.com/user-attachments/assets/adc7a8bd-46b1-461a-9184-feaccbc771e8)
+
+![image](https://github.com/user-attachments/assets/40e03e09-ffbf-4b19-b5da-6834dfbe5cdd)
+
+## Revised results on RC15 (Yoochoose) dataset
+![image](https://github.com/user-attachments/assets/f94a70ef-e1df-4942-8a32-fb5d4cff0d77)
+
+![image](https://github.com/user-attachments/assets/80630591-e2b5-4d2c-96ba-5a8dae403966)
+
+  
+While the revised results show some differences, the overall conclusions remain unchanged: the proxy methods consistently outperform the baseline versions, with results closely matching those obtained by the RL-based *-DQN method. However, one notable change is that, in this revised version, the *-FUT proxy method performs as well as, and occasionally better than, the *-HIST method.
+ 
+If you have any questions, do not hesitate sending us a message to:
+* Alvaro Labarca-Silva: aalabarca (at) uc (dot) cl
+* Denis Parra: dparras (at) uc (dot) cl
+* Rodrigo Toro: rntoro (at) uc (dot) cl
+
 # On the Unexpected Effectiveness of Reinforcement Learning for Sequential Recommendation
 
 In recent years, Reinforcement Learning (RL) has shown great promise in session-based recommendation. Sequential models that use RL have reached state-of-the-art performance for the Next-item Prediction (NIP) task. This result is intriguing, as the NIP task only evaluates how well the system can correctly recommend the next item to the user, while the goal of RL is to find a policy that optimizes rewards in the long term– sometimes at the expense of suboptimal shortterm performance. Then, how can RL improve the system’s performance on short-term metrics? This article investigates this question by exploring proxy learning objectives, which we identify as goals RL models might be following, and thus could explain the performance boost. We found that RL– when used as an auxiliary loss– promotes the learning of embeddings that capture information about the user’s previously interacted items. Subsequently, we replaced the RL objective with a straightforward auxiliary loss designed to predict the number of items the user interacted with. This substitution results in performance gains comparable to RL. These findings pave the way to improve performance and understanding of RL methods for recommender systems.
+
+# Description of this repository
 
 This repository contains the code used for the paper ***On the Unexpected Effectiveness of Reinforcement Learning for Sequential Recommendation*** ([ICML 2024](https://openreview.net/pdf?id=ie3vXkMvRY))
 
